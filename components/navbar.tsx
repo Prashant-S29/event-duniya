@@ -7,7 +7,7 @@ import { FaAngleDown } from "react-icons/fa6";
 const NAVBAR = () => {
   return (
     <>
-      <nav className="w-full flex justify-evenly items-center  h-[80px] text-white sticky top-0 ">
+      <nav className="w-full flex justify-evenly items-center  h-[80px] bg-[#141414] text-white sticky top-0 ">
         <div className="flex justify-center items-center gap-2">
           <div>{/* LOGO HERE */}</div>
           <div>
