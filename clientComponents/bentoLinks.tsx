@@ -67,7 +67,7 @@ const SERVICES = () => {
             } h-[5px] bg-gray-500 rounded-full relative  duration-500 overflow-hidden `}
           >
             {index === activeCard && (
-              <div className="absolute timeLeft-animation  h-full bg-gray-300 rounded-full" />
+              <div className="absolute timeLeft-animation  h-full bg-gray-300 rounded-full ease-linear" />
             )}
           </div>
         ))}
