@@ -24,7 +24,7 @@ const formSchema = z
     userConfirmPassword: z
       .string()
       .min(1, "Password is required")
-      .max(8, "Password must be less than 8 characters"),
+      .max(15, "Password must be less than 15 characters"),
   })
   .refine((data) => data.userPassword === data.userConfirmPassword, {
     path: ["confirmPassword"],

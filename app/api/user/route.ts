@@ -13,7 +13,7 @@ const userSchema = z.object({
   userPassword: z
     .string()
     .min(1, "Password is required")
-    .max(8, "Password must be less than 8 characters"),
+    .max(15, "Password must be less than 15 characters"),
 });
 
 // POST request
@@ -23,7 +23,7 @@ const POST = async (req: Request) => {
     const { userName, userEmail, userPassword } = userSchema.parse(body);
 
     // check if userEmail already exists
-    const existingUserByEmail = await prisma_db.user.findUnique({
+    const existingUserByEmail = await prisma_db.user.findFirst({
       where: { userEmail: userEmail },
     });
     if (existingUserByEmail) {
@@ -35,7 +35,7 @@ const POST = async (req: Request) => {
     }
 
     // check if userName already exists
-    const existingUserByName = await prisma_db.user.findUnique({
+    const existingUserByName = await prisma_db.user.findFirst({
       where: { userName: userName },
     });
     if (existingUserByName) {
@@ -67,7 +67,7 @@ const POST = async (req: Request) => {
     });
   } catch (err) {
     return NextResponse.json({
-      message: "something went wrong",
+      message: err,
       status: 500,
     });
   }
