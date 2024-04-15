@@ -23,8 +23,8 @@ const POST = async (req: Request) => {
     const { userName, userEmail, userPassword } = userSchema.parse(body);
 
     // check if userEmail already exists
-    const existingUserByEmail = await prisma_db.user.findFirst({
-      where: { userEmail: userEmail },
+    const existingUserByEmail = await prisma_db.user.findUnique({
+      where: { userEmail: userEmail as string },
     });
     if (existingUserByEmail) {
       return NextResponse.json({
@@ -35,8 +35,8 @@ const POST = async (req: Request) => {
     }
 
     // check if userName already exists
-    const existingUserByName = await prisma_db.user.findFirst({
-      where: { userName: userName },
+    const existingUserByName = await prisma_db.user.findUnique({
+      where: { userName: userName as string },
     });
     if (existingUserByName) {
       return NextResponse.json({
