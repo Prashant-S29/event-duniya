@@ -10,7 +10,7 @@ const LIVE_EVENTS = () => {
   return (
     <>
       <div
-        className="flex bg-[#DD5000] fixed z-10 right-0 rounded-l-full px-2 cursor-pointer"
+        className="flex bg-[#DD5000] fixed z-30 right-0 rounded-l-full px-2 cursor-pointer"
         onClick={() => {
           setShowLiveEventList(true);
         }}
@@ -26,7 +26,7 @@ const LIVE_EVENTS = () => {
       </div>
 
       <div
-        className={`flex fixed top-0  z-20 duration-300 ${
+        className={`flex fixed top-0  z-40 duration-300 ${
           showLiveEventList ? "right-0" : "-right-[100%]"
         }`}
         onClick={() => {

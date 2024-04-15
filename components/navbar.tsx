@@ -7,7 +7,7 @@ import { FaAngleDown } from "react-icons/fa6";
 const NAVBAR = () => {
   return (
     <>
-      <nav className="w-full flex justify-evenly items-center  h-[80px] bg-[#141414] text-white sticky top-0 ">
+      <nav className="w-full flex justify-evenly items-center z-[20]  h-[80px] bg-[#141414] text-white sticky top-0 ">
         <div className="flex justify-center items-center gap-2">
           <div>{/* LOGO HERE */}</div>
           <div>
@@ -32,13 +32,17 @@ const NAVBAR = () => {
         </div>
         <div className="flex items-center ">
           <CLICK_EFFECT>
-            <button className="px-5 py-2 rounded-full bg-[#DD5000] text-white font-semibold text-[13px]">
-              Sign Up
-            </button>
+            <Link href="/signup">
+              <button className="px-5 py-2 rounded-full bg-[#DD5000] text-white font-semibold text-[13px]">
+                Sign Up
+              </button>
+            </Link>
           </CLICK_EFFECT>
-          <button className="px-5 py-2 rounded-full  text-white font-semibold text-[13px]">
-            Login
-          </button>
+          <Link href="/login">
+            <button className="px-5 py-2 rounded-full  text-white font-semibold text-[13px]">
+              Login
+            </button>
+          </Link>
 
           {/* <div className="flex justify-center items-center gap-3">
             <div className="size-[30px] rounded-full bg-gray-300" />
