@@ -2,19 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-::-webkit-scrollbar{
-    width: 0;
+::-webkit-scrollbar {
+  width: 0;
 }
 
 .timeLeft-animation {
-    animation: timeLeft 12s forwards 1;
+  animation: timeLeft 12s forwards 1;
 }
 
 @keyframes timeLeft {
-    0%{
-        width: 0;
-    }
-    100%{
-        width: 100%;
-    }
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.toast-animation {
+  animation: toast 0.4s forwards 1 ease-out;
+}
+
+@keyframes toast {
+  0% {
+    transform: translateY(-80px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
 }

@@ -1,9 +1,16 @@
-import LOGIN_FORM from "@/clientComponents/login_form";
+"use client"
+
+import SIGIN_FORM from "@/clientComponents/forms/sigin_form";
+import { useToastNotificationState } from "@/stateStore";
+import TOAST from "@/ui/toast";
 import Link from "next/link";
 import React from "react";
 import { IoHome } from "react-icons/io5";
 
 const LOGIN = () => {
+  const { desc, status, title } = useToastNotificationState();
+  
+
   return (
     <>
       <div className="w-full flex items-center select-none">
@@ -35,11 +42,12 @@ const LOGIN = () => {
               </div>
             </div>
             <div className="mt-5">
-              <LOGIN_FORM />
+              <SIGIN_FORM />
             </div>
           </div>
         </div>
       </div>
+      <TOAST title={title} desc={desc} status={status} />
     </>
   );
 };

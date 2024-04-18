@@ -23,4 +23,26 @@ const heroBentoLinks = [
   },
 ];
 
-export { heroBentoLinks };
+const userSignUpOptions: {
+  userType: "user" | "artist" | "";
+  userTypeDesc: string[];
+}[] = [
+  {
+    userType: "user",
+    userTypeDesc: [
+      "Participate in various events",
+      "Promote your event",
+      "Host new Event",
+    ],
+  },
+  {
+    userType: "artist",
+    userTypeDesc: [
+      "Bulid up your Exclusive Profile",
+      "Get registered for various events",
+      "Get paid for your show",
+    ],
+  },
+];
+
+export { heroBentoLinks, userSignUpOptions };

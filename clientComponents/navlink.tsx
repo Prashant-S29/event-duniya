@@ -27,7 +27,7 @@ const NAVLINK = ({
         }}
       >
         <div>
-          <Link href={href} className={`${textStyle}`}>
+          <Link prefetch href={href} className={`${textStyle}`}>
             {text}
           </Link>
         </div>

@@ -1,4 +1,4 @@
-import { prisma_db } from "@/utils/prisma_db";
+import { prisma_db } from "@/lib/prisma_db";
 import { hash } from "bcrypt";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -12,7 +12,7 @@ const userSchema = z.object({
   userEmail: z.string().min(1, "Email is required").email("Invalid Email"),
   userPassword: z
     .string()
-    .min(1, "Password is required")
+    .min(8, "Password must be atleast 8 characters")
     .max(15, "Password must be less than 15 characters"),
 });
 
@@ -67,7 +67,7 @@ const POST = async (req: Request) => {
     });
   } catch (err) {
     return NextResponse.json({
-      message: err,
+      message: "Something went wrong!!",
       status: 500,
     });
   }

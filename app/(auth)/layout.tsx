@@ -17,9 +17,7 @@ export default function AuthLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} bg-[#141414]`}>
-        {children}
-      </body>
+      <body className={`${montserrat.className} bg-[#141414]`}>{children}</body>
     </html>
   );
 }

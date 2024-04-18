@@ -47,7 +47,7 @@ const SERVICES = () => {
                 <div
                   className={`${
                     index === activeCard ? "h-[40px]" : "h-0"
-                  } duration-200 overflow-hidden leading-tight line-clamp-2 ease-in-out`}
+                  } duration-200 overflow-hidden leading-none line-clamp-2 ease-in-out`}
                 >
                   <span className="text-[13px] text-gray-300">
                     {value.desc}
