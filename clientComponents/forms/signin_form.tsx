@@ -11,8 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
-import { notification } from "@/types/toast_notification";
-import { useToastNotificationState } from "@/stateStore";
+import { useResetPasswordForm, useToastNotificationState } from "@/stateStore";
 
 // Form Schema using Zod
 const FormSchema = z.object({
@@ -23,7 +22,8 @@ const FormSchema = z.object({
     .max(15, "Password must be less than 15 characters"),
 });
 
-const SIGIN_FORM = () => {
+const SIGNIN_FORM = () => {
+  const { setShowResetPassword } = useResetPasswordForm();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const { setToastNotification } = useToastNotificationState();
@@ -46,7 +46,7 @@ const SIGIN_FORM = () => {
   const handleFormSubmit: SubmitHandler<z.infer<typeof FormSchema>> = async (
     data
   ) => {
-    const signInData = await  signIn("credentials", {
+    const signInData = await signIn("credentials", {
       userEmail: data.userEmail,
       userPassword: data.userPassword,
       redirect: false,
@@ -137,11 +137,15 @@ const SIGIN_FORM = () => {
               </span>
             </div>
           )}
-          <div className="mb-3">
-            <span className="text-gray-300 underline underline-offset-1 text-[13px]">
-              Forgot Password?
-            </span>
-          </div>
+          <button
+            type="button"
+            className="text-gray-300 mb-3 underline underline-offset-1 text-[13px]"
+            onClick={() => {
+              setShowResetPassword(true);
+            }}
+          >
+            Forgot Password?
+          </button>
           <div>
             <button
               disabled={isSubmitting}
@@ -167,4 +171,4 @@ const SIGIN_FORM = () => {
   );
 };
 
-export default SIGIN_FORM;
+export default SIGNIN_FORM;

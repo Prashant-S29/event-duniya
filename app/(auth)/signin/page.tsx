@@ -1,15 +1,16 @@
-"use client"
+"use client";
 
-import SIGIN_FORM from "@/clientComponents/forms/sigin_form";
-import { useToastNotificationState } from "@/stateStore";
+import RESET_PASSWORD_FORM from "@/clientComponents/forms/reset_password_form";
+import SIGNIN_FORM from "@/clientComponents/forms/signin_form";
+import { useResetPasswordForm, useToastNotificationState } from "@/stateStore";
 import TOAST from "@/ui/toast";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { IoHome } from "react-icons/io5";
 
 const LOGIN = () => {
   const { desc, status, title } = useToastNotificationState();
-  
+  const { showResetPassword } = useResetPasswordForm();
 
   return (
     <>
@@ -41,8 +42,21 @@ const LOGIN = () => {
                 </span>
               </div>
             </div>
-            <div className="mt-5">
-              <SIGIN_FORM />
+            <div className="w-[370px] overflow-hidden">
+              <div
+                className={`flex ${
+                  showResetPassword
+                    ? "-translate-x-[370px]"
+                    : "translate-x-[0px]"
+                } duration-200`}
+              >
+                <div className="mt-5 p-[10px]">
+                  <SIGNIN_FORM />
+                </div>{" "}
+                <div className="mt-5 p-[10px]">
+                  <RESET_PASSWORD_FORM />
+                </div>
+              </div>
             </div>
           </div>
         </div>

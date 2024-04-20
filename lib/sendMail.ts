@@ -7,19 +7,31 @@ interface MailResponse {
   error?: any;
 }
 
-export const sendMail = async (data: {
+export const sendMailOTP = async (data: {
   userName: string;
   userEmail: string;
-  emailVerificationOTP: string;
+  otp: string;
+  emailTemplate: "Account Verification" | "Reset Password";
 }): Promise<MailResponse> => {
+  let teamplateID = env.NEXT_PUBLIC_TEMPLATE_ID_ACCOUNT_VERIFICATION;
+
+  switch (data.emailTemplate) {
+    case "Reset Password":
+      teamplateID = env.NEXT_PUBLIC_TEMPLATE_ID_RESET_PASSWORD;
+      break;
+    case "Account Verification":
+      teamplateID = env.NEXT_PUBLIC_TEMPLATE_ID_ACCOUNT_VERIFICATION;
+      break;
+  }
+
   try {
     const response = await emailjs.send(
-      env.NEXT_PUBLIC_SERVICE_ID || "",
-      env.NEXT_PUBLIC_TEMPLATE_ID || "",
+      env.NEXT_PUBLIC_SERVICE_ID,
+      teamplateID,
       {
         userName: data.userName,
         userEmail: data.userEmail,
-        emailVerificationOTP: data.emailVerificationOTP,
+        emailVerificationOTP: data.otp,
       },
       env.NEXT_PUBLIC_PUBLIC_KEY
     );

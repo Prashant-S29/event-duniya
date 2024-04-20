@@ -12,7 +12,7 @@ const lobster = Lobster({ weight: "400", subsets: ["cyrillic"] });
 const HERO = () => {
   return (
     <>
-      <LIVE_EVENTS />
+      {/* <LIVE_EVENTS /> */}
       <div className="flex justify-center">
         <div className="text-center px-5 py-2 border border-[#2E2E2E] bg-[#222222] rounded-full flex items-center gap-2">
           <BsStars className="text-yellow-500" />

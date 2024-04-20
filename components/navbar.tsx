@@ -1,13 +1,14 @@
+
 import NAVLINK from "@/clientComponents/navlink";
 import Link from "next/link";
 import React from "react";
 import CLICK_EFFECT from "../clientComponents/clickEffect";
 import getSessionFromServer from "@/lib/getServerSession";
-import SIGN_OUT from "@/clientComponents/signOut";
+import NAV_PROFILE from "@/clientComponents/navbarProfile";
+import { useUserProfile } from "@/stateStore";
 
 const NAVBAR = async () => {
   const session = await getSessionFromServer();
-
   return (
     <>
       <nav className="w-full flex justify-evenly items-center z-[20]  h-[80px] bg-[#141414] text-white sticky top-0 ">
@@ -33,24 +34,26 @@ const NAVBAR = async () => {
             </li>
           </ul>
         </div>
-        {session?.user.userName ? (
-          <SIGN_OUT userName={session.user.userName} />
-        ) : (
-          <div className="flex items-center ">
-            <CLICK_EFFECT>
-              <Link prefetch href="/signup">
-                <button className="px-5 py-2 rounded-full bg-[#DD5000] text-white font-semibold text-[13px]">
-                  Sign Up
+        <div className="relative">
+          {session?.user.userName ? (
+            <NAV_PROFILE userName={session.user.userName} />
+          ) : (
+            <div className="flex items-center ">
+              <CLICK_EFFECT>
+                <Link prefetch href="/signup">
+                  <button className="px-5 py-2 rounded-full bg-[#DD5000] text-white font-semibold text-[13px]">
+                    Sign Up
+                  </button>
+                </Link>
+              </CLICK_EFFECT>
+              <Link prefetch href="/api/auth/signin">
+                <button className="px-5 py-2 rounded-full  text-white font-semibold text-[13px]">
+                  Login
                 </button>
               </Link>
-            </CLICK_EFFECT>
-            <Link prefetch href="/api/auth/signin">
-              <button className="px-5 py-2 rounded-full  text-white font-semibold text-[13px]">
-                Login
-              </button>
-            </Link>
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </nav>
     </>
   );

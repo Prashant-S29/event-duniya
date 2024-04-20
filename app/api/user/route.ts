@@ -1,5 +1,6 @@
 import { prisma_db } from "@/lib/prisma_db";
 import { hash } from "bcrypt";
+import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -73,4 +74,34 @@ const POST = async (req: Request) => {
   }
 };
 
-export { POST };
+const GET = async (request: Request) => {
+  try {
+    const allData: {
+      userId: number;
+      userEmail: string;
+      userName: string;
+      userPassword: string;
+      userCreatedAt: Date;
+      userUpdatedAt: Date;
+    }[] = await prisma_db.user.findMany();
+    if (!allData) {
+      return NextResponse.json({
+        user: null,
+        message: "User not found",
+        status: 409,
+      });
+    }
+    return NextResponse.json({
+      userDetails: allData,
+      status: 200,
+    });
+  } catch (error) {
+    return NextResponse.json({
+      user: null,
+      message: error,
+      status: 500,
+    });
+  }
+};
+
+export { POST, GET };

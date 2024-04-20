@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from "next/link";
-import { sendMail } from "@/lib/sendMail";
+import { sendMailOTP } from "@/lib/sendMail";
 import { useToastNotificationState } from "@/stateStore";
 import { signIn } from "next-auth/react";
 
@@ -84,10 +84,11 @@ const SIGNUP_FORM_USER = () => {
 
     // Send otp to user email
     try {
-      const mailResponse = await sendMail({
+      const mailResponse = await sendMailOTP({
         userName: data.userName,
         userEmail: data.userEmail,
-        emailVerificationOTP: otp.toString(),
+        otp: otp.toString(),
+        emailTemplate: "Account Verification",
       });
       if (mailResponse.status === "success") {
         setToastNotification(
