@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from "next/link";
-import { sendMailOTP } from "@/lib/sendMailOTP";
+import { sendMailOTP } from "@/lib/sendMail";
 import { useToastNotificationState } from "@/stateStore";
 import { signIn } from "next-auth/react";
 
@@ -87,7 +87,7 @@ const SIGNUP_FORM_ARTIST = () => {
       const mailResponse = await sendMailOTP({
         userName: data.userName,
         userEmail: data.userEmail,
-        emailVerificationOTP: otp.toString(),
+        otp: otp.toString(),
       });
       if (mailResponse.status === "success") {
         setToastNotification(
