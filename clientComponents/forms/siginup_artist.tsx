@@ -88,6 +88,7 @@ const SIGNUP_FORM_ARTIST = () => {
         userName: data.userName,
         userEmail: data.userEmail,
         otp: otp.toString(),
+        emailTemplate: "Account Verification",
       });
       if (mailResponse.status === "success") {
         setToastNotification(
