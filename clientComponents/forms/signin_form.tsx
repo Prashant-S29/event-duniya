@@ -15,14 +15,15 @@ import { useResetPasswordForm, useToastNotificationState } from "@/stateStore";
 
 // Form Schema using Zod
 const FormSchema = z.object({
-  userEmail: z.string().min(1, "Email is required").email("Invalid Email"),
-  userPassword: z
+  email: z.string().min(1, "Email is required").email("Invalid Email"),
+  password: z
     .string()
     .min(8, "Password must be atleast 8 characters")
     .max(15, "Password must be less than 15 characters"),
 });
 
 const SIGNIN_FORM = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { setShowResetPassword } = useResetPasswordForm();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -47,12 +48,12 @@ const SIGNIN_FORM = () => {
     data
   ) => {
     const signInData = await signIn("credentials", {
-      userEmail: data.userEmail,
-      userPassword: data.userPassword,
+      email: data.email,
+      password: data.password,
       redirect: false,
     });
     if (signInData?.error) {
-      // console.log(signInData.status);
+      console.log(signInData.error);
       setToastNotification(
         "Unable to login",
         "User not found. Please check your credentials and try again",
@@ -70,14 +71,49 @@ const SIGNIN_FORM = () => {
     }
   };
 
+  const handleSingInWithGoogle = async () => {
+    try {
+      setIsLoading(true);
+      const res = await signIn("google", {
+        callbackUrl: "/",
+      });
+      if (res?.ok) {
+        setToastNotification(
+          "Success",
+          "You are now beign redirected to home page",
+          "success"
+        );
+      }
+      console.log(res);
+      // throw new Error();
+    } catch (error) {
+      console.log(error);
+      setToastNotification(
+        "Login Failed",
+        "Unable to login. Try again",
+        "error"
+      );
+      hideToastNotification(5000);
+    }
+    setIsLoading(false);
+  };
+
   return (
     <>
-      <div
-        className="w-[350px] flex bg-[#222222] border border-[#2E2E2E] rounded-[7px] px-4 py-2 items-center
-       justify-center gap-3"
-      >
-        <FcGoogle className="text-[22px]" />
-        <span className="text-white  text-[13px]">Login with Google</span>
+      <div className="w-[350px]">
+        <button
+          disabled={isLoading}
+          className={`w-full flex bg-[#222222] ${
+            isLoading ? "text-gray-400 cursor-not-allowed" : "text-white"
+          } border border-[#2E2E2E]  rounded-[7px] px-4 py-2 items-center
+          justify-center gap-3`}
+          onClick={handleSingInWithGoogle}
+        >
+          <FcGoogle className={`text-[22px] ${isLoading && "brightness-50"}`} />
+          <span className="  text-[13px]">
+            {isLoading ? "Processing..." : "Login with Google"}
+          </span>
+        </button>
       </div>
       <div className="flex justify-center gap-3 items-center my-3">
         <div className="w-[150px] h-[0.5px] bg-gray-500 rounded-full" />
@@ -91,17 +127,17 @@ const SIGNIN_FORM = () => {
           <div>
             <input
               type="text"
-              {...register("userEmail")}
+              {...register("email")}
               disabled={isSubmitting}
               placeholder="Email"
               className={`w-[350px] p-2 bg-[#222222] border border-[#2E2E2E] rounded-[7px] text-[13px] outline-none  ${
                 isSubmitting ? "text-gray-500 cursor-not-allowed" : "text-white"
-              } ${errors.userEmail ? "mb-0" : "mb-3"}`}
+              } ${errors.email ? "mb-0" : "mb-3"}`}
             />
-            {errors.userEmail && (
+            {errors.email && (
               <div className="mb-3">
                 <span className="text-red-500 text-[13px]">
-                  *{errors.userEmail.message}
+                  *{errors.email.message}
                 </span>
               </div>
             )}
@@ -109,12 +145,12 @@ const SIGNIN_FORM = () => {
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
-              {...register("userPassword")}
+              {...register("password")}
               disabled={isSubmitting}
               placeholder="Password"
               className={`w-[350px] p-2 flex items-center bg-[#222222] border border-[#2E2E2E] rounded-[7px] text-[13px] outline-none ${
                 isSubmitting ? "text-gray-500 cursor-not-allowed" : "text-white"
-              } ${errors.userPassword ? "mb-0" : "mb-3"}`}
+              } ${errors.password ? "mb-0" : "mb-3"}`}
             />
 
             <div
@@ -130,10 +166,10 @@ const SIGNIN_FORM = () => {
               )}
             </div>
           </div>
-          {errors.userPassword && (
+          {errors.password && (
             <div>
               <span className="text-red-500 text-[13px]">
-                *{errors.userPassword.message}
+                *{errors.password.message}
               </span>
             </div>
           )}

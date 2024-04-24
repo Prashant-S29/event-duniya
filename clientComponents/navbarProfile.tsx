@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
@@ -9,8 +9,12 @@ import { PiSignOutBold } from "react-icons/pi";
 import KeyStrokeBinder from "@/lib/keyStrokeBinder";
 import { useUserProfile } from "@/stateStore";
 import Link from "next/link";
+import { User } from "@prisma/client";
+import Image from "next/image";
 
-const NAV_PROFILE = ({ userName }: { userName: string }) => {
+const NAV_PROFILE = () => {
+  const { data: session } = useSession();
+
   const { showUserProfile, setShowUserProfile } = useUserProfile();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const handleShowProfile = () => {
@@ -43,9 +47,20 @@ const NAV_PROFILE = ({ userName }: { userName: string }) => {
           </div>
         ) : (
           <>
-            <div className="size-[30px] rounded-full bg-gray-300" />
+            {/* <div className="size-[30px] rounded-full bg-gray-300" /> */}
+            {session?.user.image && (
+              <div>
+                <Image
+                  src={session.user.image}
+                  alt={`${session?.user.name}`}
+                  className="size-[30px] rounded-full"
+                  width={30}
+                  height={30}
+                />
+              </div>
+            )}
             <div className="text-ellipsis w-[100px] overflow-hidden whitespace-nowrap">
-              <span className="text-[14px]">{userName}</span>
+              <span className="text-[14px]">{session?.user.name}</span>
             </div>
           </>
         )}

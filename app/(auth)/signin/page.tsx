@@ -2,6 +2,7 @@
 
 import RESET_PASSWORD_FORM from "@/clientComponents/forms/reset_password_form";
 import SIGNIN_FORM from "@/clientComponents/forms/signin_form";
+import GOOGLE_SIGNIN from "@/clientComponents/google_signin";
 import { useResetPasswordForm, useToastNotificationState } from "@/stateStore";
 import TOAST from "@/ui/toast";
 import Link from "next/link";
@@ -42,7 +43,7 @@ const LOGIN = () => {
                 </span>
               </div>
             </div>
-            <div className="w-[370px] overflow-hidden">
+            {/* <div className="w-[370px] overflow-hidden">
               <div
                 className={`flex ${
                   showResetPassword
@@ -57,6 +58,9 @@ const LOGIN = () => {
                   <RESET_PASSWORD_FORM />
                 </div>
               </div>
+            </div> */}
+            <div>
+              <GOOGLE_SIGNIN />
             </div>
           </div>
         </div>

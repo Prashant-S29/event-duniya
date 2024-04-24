@@ -5,14 +5,14 @@ import { NextResponse } from "next/server";
 const PUT = async (request: Request, { params }: { params: any }) => {
   try {
     const { email } = params;
-    const { newUserPassword } = await request.json();
-    // console.log("newUserPassword", newUserPassword);
+    const { newPassword } = await request.json();
+    // console.log("newPassword", newPassword);
     // console.log("email", email);
-    const hashedUserPassword = await hash(newUserPassword, 10); // Hasing userNewPassword
+    const hashedPassword = await hash(newPassword, 10); // Hasing userNewPassword
     const response = await prisma_db.user.update({
-      where: { userEmail: email },
+      where: { email: email },
       data: {
-        userPassword: hashedUserPassword,
+        password: hashedPassword,
       },
     });
     return NextResponse.json({
@@ -32,7 +32,8 @@ const GET = async (request: Request, { params }: { params: string }) => {
     const { email }: any = params;
 
     const userData: any = await prisma_db.user.findUnique({
-      where: { userEmail: email },
+      where: { email: email },
+      select: { id: true, name: true, email: true, image: true },
     });
     if (!userData) {
       return NextResponse.json({
